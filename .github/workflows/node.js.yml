@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 env:
   PORT: ${{ vars.PORT }}
-  MONGODB_URL: ${{ vars.MONGODB_URL }}
+  MONGODB_URL: ${{ secrets.MONGODB_URL }}
   JWT_SECRET_KEY: ${{ vars.JWT_SECRET_KEY }}
 jobs:
   build:
