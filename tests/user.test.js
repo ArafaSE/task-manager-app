@@ -1,9 +1,10 @@
 const request = require("supertest")
 const app = require("../srs/app")
 const User = require('../srs/models/user')
-const {userOneId, userOne, setupDatabase} = require('./fixtures/db')
+const {userOneId, userOne, setupDatabase, closeDatabase} = require('./fixtures/db')
 
 beforeEach(setupDatabase)
+afterEach(closeDatabase)
 
 test('Should signup a new user', async () => {
     const response = await request(app).post('/users').send({
