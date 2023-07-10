@@ -9,9 +9,9 @@ on:
   pull_request:
     branches: [ "main" ]
 env:
-  PORT: ${{ vars.PORT }}
+  PORT: ${{ secrets.PORT }}
   MONGODB_URL: ${{ secrets.MONGODB_URL }}
-  JWT_SECRET_KEY: ${{ vars.JWT_SECRET_KEY }}
+  JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
 jobs:
   build:
 
