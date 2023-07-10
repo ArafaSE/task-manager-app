@@ -1,10 +1,9 @@
 const request = require("supertest")
 const Task = require('../srs/models/task')
 const app = require("../srs/app")
-const {userOne, taskThree, setupDatabase, closeDatabase} = require('./fixtures/db')
+const {userOne, taskThree, setupDatabase} = require('./fixtures/db')
 
 beforeEach(setupDatabase)
-afterEach(closeDatabase)
 
 test('Should create task for user', async () => {
     const response = await request(app)
