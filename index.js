@@ -1,4 +1,4 @@
-const app = require("./app")
+const app = require("./srs/app")
 const port = process.env.PORT
 
 app.listen(port, () => {
