@@ -4,8 +4,6 @@ const Task = require('../models/task')
 const auth = require('../middelware/auth')
 const router = new express.Router()
 
-router.get('/', async (req, res) => res.json("Server is up and running..."));
-
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
 
