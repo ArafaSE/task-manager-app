@@ -1,13 +1,18 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./docs/user.yaml');
 require('./db/mongoose')
 
-const userRouter = require('./routers/user')
-const taskRouter = require('./routers/task')
-const siteRouter = require('./routers/site')
+const userRouter = require('./routes/user')
+const taskRouter = require('./routes/task')
+const siteRouter = require('./routes/site')
 
 const app = express()
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // Define paths for Express config
 const publicDirPath = path.join(__dirname, '../public')
