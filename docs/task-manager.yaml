@@ -4,6 +4,7 @@ info:
   description: This is a docs for the task manager app 
   version: 1.0.0
 servers:
+- url: https://www.testingscope.com
 - url: http://localhost:3000
 security:
   - BearerAuth: []
@@ -81,8 +82,8 @@ paths:
             schema:
               $ref: '#/components/schemas/UserLogin'
             example:
-              email: john@example.com
-              password: mypassword
+              email: david@gmail.com
+              password: david123
       responses:
         '200':
           description: User logged in successfully
@@ -207,3 +208,180 @@ paths:
           description: Internal server error
       security:
         - BearerAuth: []
+  /tasks:
+    post:
+      summary: Create a new task
+      description: Creates a new task with the provided details
+      tags:
+        - tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/TaskInput"
+            example:
+              description: Fiinish swagger docs
+              completed: false
+      responses:
+        '201':
+          description: Created task
+          schema:
+            $ref: "#/definitions/Task"
+        '400':
+          description: Bad request
+    get:
+      summary: Get a list of tasks
+      description: Retrieves a list of tasks with optional query parameters
+      tags:
+        - tasks
+      parameters:
+        - name: completed
+          in: query
+          required: false
+          description: Filter tasks by completed status
+          type: string
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of tasks to return
+          type: integer
+        - name: skip
+          in: query
+          required: false
+          description: Number of tasks to skip before returning the results
+          type: integer
+        - name: sortBy
+          in: query
+          required: false
+          description: Sort tasks by desc or desc
+          type: string
+      responses:
+        '200':
+          description: List of tasks
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Task"
+        '500':
+          description: Internal server error
+
+  /tasks/{id}:
+    get:
+      summary: Get a task by ID
+      description: Retrieves a task with the specified ID
+      tags:
+        - tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the task to retrieve
+          type: string
+      responses:
+        '200':
+          description: Task with the specified ID
+          schema:
+            $ref: "#/definitions/Task"
+        '400':
+          description: Bad request
+        '404':
+          description: Task not found
+        '500':
+          description: Internal server error
+    patch:
+      summary: Update a task by ID
+      description: Updates a task with the specified ID and returns the updated task
+      tags:
+        - tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the task to update
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/TaskUpdate"
+            example:
+              description: Buy groceries and laundry detergent
+              completed: true
+      responses:
+        '200':
+          description: Updated task
+          schema:
+            $ref: "#/definitions/Task"
+        '400':
+          description: Bad request
+        '404':
+          description: Task not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete a task by ID
+      description: Deletes a task with the specified ID and returns the deleted task
+      tags:
+        - tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the task to delete
+          type: string
+      responses:
+        '200':
+          description: Deleted task
+          schema:
+            $ref: "#/definitions/Task"
+        '404':
+          description: Task not found
+        '500':
+          description: Internal server error
+
+definitions:
+  TaskInput:
+    type: object
+    properties:
+      description:
+        type: string
+        example: "Buy groceries"
+      completed:
+        type: boolean
+        example: false
+    required:
+      - description
+
+  TaskUpdate:
+    type: object
+    properties:
+      description:
+        type: string
+        example: "Buy groceries and laundry detergent"
+      completed:
+        type: boolean
+        example: true
+
+  Task:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: "12345"
+      description:
+        type: string
+        example: "Buygroceries and laundry detergent"
+      completed:
+        type: boolean
+        example: true
+      owner:
+        type: string
+        example: "67890"
+      createdAt:
+        type: string
+        example: "2023-07-12T10:00:00.000Z"
+      updatedAt:
+        type: string
+        example: "2023-07-12T11:00:00.000Z"

@@ -3,7 +3,7 @@ const express = require('express')
 const hbs = require('hbs')
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./docs/user.yaml');
+const swaggerDocument = YAML.load('./docs/task-manager.yaml');
 require('./db/mongoose')
 
 const userRouter = require('./routes/user')
