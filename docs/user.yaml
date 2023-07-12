@@ -1,0 +1,209 @@
+openapi: 3.0.0
+info:
+  title: API Docs
+  description: This is a docs for the task manager app 
+  version: 1.0.0
+servers:
+- url: http://localhost:3000
+security:
+  - BearerAuth: []
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Retrieve a list of all users
+      parameters:
+        - in: query
+          name: age
+          schema:
+            type: integer
+            minimum: 18
+          description: Filter users by minimum age
+      responses:
+        '200':
+          description: A list of user objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+            example:
+              name: John Smith
+              email: john234@example.com
+              password: john123
+              age: 30
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWithToken'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - BearerAuth: []
+  /users/login:
+    post:
+      tags:
+        - Users
+      summary: Login a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+            example:
+              email: john@example.com
+              password: mypassword
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWithToken'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/logout:
+    post:
+      tags:
+        - Users
+      summary: Logout the current user
+      responses:
+        '200':
+          description: User logged out successfully
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
+  /users/logoutAll:
+    post:
+      tags:
+        - Users
+      summary: Logout the current user from all devices
+      responses:
+        '200':
+          description: User logged out from all devices successfully
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
+  /users/me:
+    get:
+      tags:
+        - Users
+      summary: Retrieve the current user profile
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
+    patch:
+      tags:
+        - Users
+      summary: Update the current user profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+            example:
+              name: John Smith
+              password: John1234
+              age: 51
+      responses:
+        '200':
+          description: User profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Users
+      summary: Delete the current user profile
+      responses:
+        '200':
+          description: User profile deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Retrieve a user by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The ID of the user to retrieve
+      responses:
+        '200':
+          description: User object retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+      security:
+        - BearerAuth: []
