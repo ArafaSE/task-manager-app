@@ -35,7 +35,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/definitions/User'
         '500':
           description: Internal server error
       security:
@@ -49,7 +49,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewUser'
+              $ref: '#/definitions/NewUser'
             example:
               name: John Smith
               email: john234@example.com
@@ -61,13 +61,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserWithToken'
+                $ref: '#/definitions/UserWithToken'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/definitions/Error'
       security:
         - BearerAuth: []
   /users/login:
@@ -80,7 +80,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserLogin'
+              $ref: '#/definitions/UserLogin'
             example:
               email: david@gmail.com
               password: david123
@@ -90,13 +90,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserWithToken'
+                $ref: '#/definitions/UserWithToken'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/definitions/Error'
   /users/logout:
     post:
       tags:
@@ -132,7 +132,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/definitions/User'
         '500':
           description: Internal server error
       security:
@@ -146,7 +146,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserUpdate'
+              $ref: '#/definitions/UserUpdate'
             example:
               name: John Smith
               password: John1234
@@ -157,13 +157,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/definitions/User'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/definitions/Error'
         '500':
           description: Internal server error
       security:
@@ -178,7 +178,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/definitions/User'
         '500':
           description: Internal server error
       security:
@@ -201,7 +201,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/definitions/User'
         '404':
           description: User not found
         '500':
@@ -213,7 +213,7 @@ paths:
       summary: Create a new task
       description: Creates a new task with the provided details
       tags:
-        - tasks
+        - Tasks
       requestBody:
         required: true
         content:
@@ -221,20 +221,22 @@ paths:
             schema:
               $ref: "#/definitions/TaskInput"
             example:
-              description: Fiinish swagger docs
+              description: Finish swagger docs
               completed: false
       responses:
         '201':
-          description: Created task
-          schema:
-            $ref: "#/definitions/Task"
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
         '400':
           description: Bad request
     get:
       summary: Get a list of tasks
       description: Retrieves a list of tasks with optional query parameters
       tags:
-        - tasks
+        - Tasks
       parameters:
         - name: completed
           in: query
@@ -259,10 +261,10 @@ paths:
       responses:
         '200':
           description: List of tasks
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/Task"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
         '500':
           description: Internal server error
 
@@ -271,7 +273,7 @@ paths:
       summary: Get a task by ID
       description: Retrieves a task with the specified ID
       tags:
-        - tasks
+        - Tasks
       parameters:
         - name: id
           in: path
@@ -281,8 +283,10 @@ paths:
       responses:
         '200':
           description: Task with the specified ID
-          schema:
-            $ref: "#/definitions/Task"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
         '400':
           description: Bad request
         '404':
@@ -293,7 +297,7 @@ paths:
       summary: Update a task by ID
       description: Updates a task with the specified ID and returns the updated task
       tags:
-        - tasks
+        - Tasks
       parameters:
         - name: id
           in: path
@@ -307,13 +311,15 @@ paths:
             schema:
               $ref: "#/definitions/TaskUpdate"
             example:
-              description: Buy groceries and laundry detergent
+              description: Buy groceries
               completed: true
       responses:
         '200':
           description: Updated task
-          schema:
-            $ref: "#/definitions/Task"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
         '400':
           description: Bad request
         '404':
@@ -324,7 +330,7 @@ paths:
       summary: Delete a task by ID
       description: Deletes a task with the specified ID and returns the deleted task
       tags:
-        - tasks
+        - Tasks
       parameters:
         - name: id
           in: path
@@ -334,20 +340,100 @@ paths:
       responses:
         '200':
           description: Deleted task
-          schema:
-            $ref: "#/definitions/Task"
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
         '404':
           description: Task not found
         '500':
           description: Internal server error
 
 definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The unique identifier for the user
+      name:
+        type: string
+        description: The name of the user
+      email:
+        type: string
+        format: email
+        description: The email address of the user
+      age:
+        type: integer
+        description: The age of the user
+      created_at:
+        type: string
+        format: date-time
+        description: The timestamp of when the user was created
+      updated_at:
+        type: string
+        format: date-time
+        description: The timestamp of when the user was last updated
+
+  NewUser:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of the user
+      email:
+        type: string
+        format: email
+        description: The email address of the user
+      password:
+        type: string
+        description: The password for the user
+      age:
+        type: integer
+        description: The age of the user
+  UserWithToken:
+    type: object
+    properties:
+      user:
+        $ref: '#/definitions/User'
+      token:
+        type: string
+        description: The JWT token for the user
+  UserLogin:
+    type: object
+    properties:
+      email:
+        type: string
+        format: email
+        description: The email address of the user
+      password:
+        type: string
+        description: The password for the user
+  UserUpdate:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The updated name of the user
+      password:
+        type: string
+        description: The updated password for the user
+      age:
+        type: integer
+        description: The updated age of the user
+  Error:
+    type: object
+    properties:
+      message:
+        type: string
+        description: A description of the error that occurred
+
   TaskInput:
     type: object
     properties:
       description:
         type: string
-        example: "Buy groceries"
+        example: "string"
       completed:
         type: boolean
         example: false
@@ -359,7 +445,7 @@ definitions:
     properties:
       description:
         type: string
-        example: "Buy groceries and laundry detergent"
+        example: "string"
       completed:
         type: boolean
         example: true
@@ -372,7 +458,7 @@ definitions:
         example: "12345"
       description:
         type: string
-        example: "Buygroceries and laundry detergent"
+        example: "string"
       completed:
         type: boolean
         example: true
