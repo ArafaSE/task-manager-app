@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>{{title}}</title>
-   {{>head}}
+    {{>head}}
 </head>
 
 <body class="d-flex flex-column h-100 bg-light">
@@ -16,19 +17,23 @@
                     <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">{{title}}</span></h1>
                 </div>
                 <div class="row gx-5 justify-content-center">
-                    <div class="col-lg-11 col-xl-9 col-xxl-8">
+                    <div class="col-md-12 col-lg-11 col-xl-9 col-xxl-8">
                         <!-- Project Card 1-->
                         <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
                             <div class="card-body p-0">
                                 <div class="d-flex align-items-center">
-                                    <div class="p-5">
-                                        <a href="https://www.udemy.com/course/mastering-web-automation-using-playwright-and-javascript/" style="text-decoration: none; color:#212529;">
-                                        <h2 class="fw-bolder">Mastering Web Automation using Playwright & JavaScript (AR)</h2></a>
-                                        <p>Learn how to use Playwright to automate web browsers, create E2E test cases, API tests, and to run the tests into CI/CD</p>
+                                    <div class="p-4">
+                                        <img class="img-fluid rounded-4 mb-3 mx-auto d-block"
+                                            src="/img/pw-course-img.jpg" width="300px" height="400px"
+                                            alt="Playwright Web Automation in AR" />
+                                        <a href="https://www.udemy.com/course/mastering-web-automation-using-playwright-and-javascript/"
+                                            style="text-decoration: none; color:#212529;">
+                                            <h2 class="fw-bolder">Mastering Web Automation using Playwright & JavaScript
+                                                (AR)</h2>
+                                        </a>
+                                        <p>Learn how to use Playwright to automate web browsers, create E2E test cases,
+                                            API tests, and to run the tests into CI/CD</p>
                                     </div>
-                                    
-                                    <img class="img-fluid" src="/img/pw-course-img.jpg" width="300px" height="400px"
-                                        alt="Playwright Web Automation in AR" />
                                 </div>
                             </div>
                         </div>
@@ -37,7 +42,8 @@
                             <div class="card-body p-0">
                                 <div class="d-flex align-items-center">
                                     <div class="p-5">
-                                        <h2 class="fw-bolder">Testing Web APIs <span class="text-gradient">[COMING SOON]</span></h2>
+                                        <h2 class="fw-bolder">Testing Web APIs <span class="text-gradient">[COMING
+                                                SOON]</span></h2>
                                         <p></p>
                                     </div>
                                     <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d"
@@ -63,6 +69,7 @@
     {{>footer}}
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
 </body>
