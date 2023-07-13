@@ -4,29 +4,31 @@ const router = new express.Router()
 
 router.get('/', async (req, res) => {
     res.render('index', {
-        title: 'Home',
-        name: 'Mohamed Arafa'
+        title: 'TestingScope'
     })
 })
 
-router.get('/about', async (req, res) => {
-    res.render('about', {
-        title: 'About',
-        name: 'Mohamed Arafa'
+router.get('/contact', async (req, res) => {
+    res.render('contact', {
+        title: 'Contact us'
     })
 })
 
-router.get('/api', async (req, res) => {
-    res.render('api', {
-        title: 'API Docs',
-        name: 'Mohamed Arafa'
+router.get('/resume', async (req, res) => {
+    res.render('resume', {
+        title: 'Resume'
+    })
+})
+
+router.get('/courses', async (req, res) => {
+    res.render('courses', {
+        title: 'Courses'
     })
 })
 
 router.get('*', async (req, res) => {
     res.render('404', {
         title: 'Error 404',
-        name: 'Mohamed Arafa',
         errorMsg: '404 Page not found!'
     })
 })

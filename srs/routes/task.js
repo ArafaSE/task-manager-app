@@ -3,7 +3,7 @@ const Task = require('../models/task')
 const auth = require('../middelware/auth')
 const router = new express.Router()
 
-router.post('/tasks', auth, async (req, res) => {
+router.post('/api/tasks', auth, async (req, res) => {
     const task = new Task({
         ...req.body,
         owner: req.user._id
@@ -20,7 +20,7 @@ router.post('/tasks', auth, async (req, res) => {
 // GET /tasks?completed=true
 // GET /tasks?limit=10&skip=20
 // GET /tasks?sortBy=createdAt:desc
-router.get('/tasks', auth, async (req, res) => {
+router.get('/api/tasks', auth, async (req, res) => {
     const query = { owner: req.user._id };
     const sortParams = {}
     if (req.query.completed)
@@ -43,7 +43,7 @@ router.get('/tasks', auth, async (req, res) => {
     }
 })
  
-router.get('/tasks/:id', auth, async (req, res) => {
+router.get('/api/tasks/:id', auth, async (req, res) => {
     const _id = req.params.id
     if(_id.length !== 24){
         return res.status(400).send({'bad request':'id length should be 24 char'})
@@ -60,7 +60,7 @@ router.get('/tasks/:id', auth, async (req, res) => {
     }
 })
 
-router.patch('/tasks/:id', auth, async (req, res) => {
+router.patch('/api/tasks/:id', auth, async (req, res) => {
    
     const updates = Object.keys(req.body)
     const allowedUpdates = ['description', 'completed']
@@ -85,7 +85,7 @@ router.patch('/tasks/:id', auth, async (req, res) => {
     }
 })
 
-router.delete('/tasks/:id', auth, async (req, res)=>{
+router.delete('/api/tasks/:id', auth, async (req, res)=>{
     try{
         const task = await Task.findOneAndDelete({ _id: req.params.id, owner: req.user._id })
         if(!task){

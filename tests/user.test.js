@@ -6,7 +6,7 @@ const {userOneId, userOne, setupDatabase} = require('./fixtures/db')
 beforeEach(setupDatabase)
 
 test('Should signup a new user', async () => {
-    const response = await request(app).post('/users').send({
+    const response = await request(app).post('/api/users').send({
         name: "Marten Jack",
         age: "35",
         email: "marten@gmail.com",
@@ -22,7 +22,7 @@ test('Should signup a new user', async () => {
 })
 
 test('Should login existing user', async () => {
-    const response = await request(app).post('/users/login').send({
+    const response = await request(app).post('/api/users/login').send({
         email: userOne.email,
         password: userOne.password
     }).expect(200)
@@ -33,7 +33,7 @@ test('Should login existing user', async () => {
 })
 
 test('Should not login non existing user', async () => {
-    await request(app).post('/users/login').send({
+    await request(app).post('/api/users/login').send({
         email: userOne.email,
         password: 'wrongePass'
     }).expect(400)
@@ -41,7 +41,7 @@ test('Should not login non existing user', async () => {
 
 test('Should get profile for user', async () => {
     await request(app)
-        .get('/users/me')
+        .get('/api/users/me')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
         .expect(200)
@@ -49,14 +49,14 @@ test('Should get profile for user', async () => {
 
 test('Should not get profile for unauthenticated user', async () => {
     await request(app)
-        .get('/users/me')
+        .get('/api/users/me')
         .send()
         .expect(401)
 })
 
 test('Should update valid user fields', async () => {
     await request(app)
-        .patch('/users/me')
+        .patch('/api/users/me')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send({
             age: 55,
@@ -72,7 +72,7 @@ test('Should update valid user fields', async () => {
 
 test('Should not update invalid user fields', async () => {
     await request(app)
-        .patch('/users/me')
+        .patch('/api/users/me')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send({
             location: 'Cairo',
@@ -82,7 +82,7 @@ test('Should not update invalid user fields', async () => {
 
 test('Should delete account for user', async () => {
     await request(app)
-        .delete('/users/me')
+        .delete('/api/users/me')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
         .expect(200)
@@ -94,7 +94,7 @@ test('Should delete account for user', async () => {
 
 test('Should not delete account for unauthenticated user', async () => {
     await request(app)
-        .delete('/users/me')
+        .delete('/api/users/me')
         .send()
         .expect(401)
 })
