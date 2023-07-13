@@ -7,7 +7,7 @@ beforeEach(setupDatabase)
 
 test('Should create task for user', async () => {
     const response = await request(app)
-        .post('/tasks')
+        .post('/api/tasks')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send({
             description: "From my test suite"
@@ -21,7 +21,7 @@ test('Should create task for user', async () => {
 
 test('Should fetch user tasks', async () => {
     const response = await request(app)
-        .get('/tasks')
+        .get('/api/tasks')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
         .expect(200)
@@ -32,7 +32,7 @@ test('Should fetch user tasks', async () => {
 
 test('Should not be able to delete other users tasks', async () => {
     await request(app)
-        .delete(`/tasks/${taskThree._id}`)
+        .delete(`/api/tasks/${taskThree._id}`)
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
         .expect(404)

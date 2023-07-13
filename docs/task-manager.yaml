@@ -4,8 +4,8 @@ info:
   description: This is a docs for the task manager app 
   version: 1.0.0
 servers:
-- url: https://www.testingscope.com
-- url: http://localhost:3000
+- url: https://www.testingscope.com/api
+- url: http://localhost:3000/api
 security:
   - BearerAuth: []
 components:
@@ -64,10 +64,6 @@ paths:
                 $ref: '#/definitions/UserWithToken'
         '400':
           description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/definitions/Error'
       security:
         - BearerAuth: []
   /users/login:
@@ -93,10 +89,6 @@ paths:
                 $ref: '#/definitions/UserWithToken'
         '400':
           description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/definitions/Error'
   /users/logout:
     post:
       tags:
@@ -160,10 +152,6 @@ paths:
                 $ref: '#/definitions/User'
         '400':
           description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/definitions/Error'
         '500':
           description: Internal server error
       security:
